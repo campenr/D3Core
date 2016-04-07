@@ -1,17 +1,19 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
+		    
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+		mavenCentral()
         maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
         classpath group: 'com.github.rodionmoiseev.gradle.plugins', name: 'idea-utils', version: '0.2'
     }
 }
@@ -23,7 +25,7 @@ configurations {
     deployJars
 }
 
-apply plugin: "forge"
+apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "maven"
 apply plugin: "idea-utils"
 
@@ -37,14 +39,15 @@ archivesBaseName = 'D3Core'
 def githuborg = 'DoubleDoorDevelopment'
 def description = 'DoubleDoor Development Core'
 minecraft {
-    version = "1.7.10-10.13.1.1226"
-    runDir = "jars"
+    version = "1.9-12.16.0.1853-1.9"
+    mappings = "snapshot_20160324"
+    runDir = "run"
 }
 
-if (System.getenv().BUILD_NUMBER != null) version += "." + System.getenv().BUILD_NUMBER
-def builder = new groovy.json.JsonBuilder()
-builder (version: version, mcversion: project.minecraft.version, apiversion: project.minecraft.apiVersion)
-new File("versions.json").write(builder.toPrettyString())
+//if (System.getenv().BUILD_NUMBER != null) version += "." + System.getenv().BUILD_NUMBER
+//def builder = new groovy.json.JsonBuilder()
+//builder (version: version, mcversion: project.minecraft.version, apiversion: project.minecraft.apiVersion)
+//new File("versions.json").write(builder.toPrettyString())
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
