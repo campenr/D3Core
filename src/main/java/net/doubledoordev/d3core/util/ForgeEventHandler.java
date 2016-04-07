@@ -32,25 +32,28 @@
 
 package net.doubledoordev.d3core.util;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.HoverEvent;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Style;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -73,9 +76,9 @@ public class ForgeEventHandler
     {
         if (event.showAdvancedItemTooltips)
         {
-            if (enableStringID) event.toolTip.add(EnumChatFormatting.DARK_AQUA + GameData.getItemRegistry().getNameForObject(event.itemStack.getItem()));
-            if (enableUnlocalizedName) event.toolTip.add(EnumChatFormatting.DARK_GREEN + event.itemStack.getUnlocalizedName());
-            if (enableOreDictionary) for (int id : OreDictionary.getOreIDs(event.itemStack)) event.toolTip.add(EnumChatFormatting.DARK_PURPLE + OreDictionary.getOreName(id));
+            if (enableStringID) event.toolTip.add(TextFormatting.DARK_AQUA + GameData.getItemRegistry().getNameForObject(event.itemStack.getItem()));
+            if (enableUnlocalizedName) event.toolTip.add(TextFormatting.DARK_GREEN + event.itemStack.getUnlocalizedName());
+            if (enableOreDictionary) for (int id : OreDictionary.getOreIDs(event.itemStack)) event.toolTip.add(TextFormatting.DARK_PURPLE + OreDictionary.getOreName(id));
         }
     }
 
@@ -102,13 +105,13 @@ public class ForgeEventHandler
     {
         if (event.entityLiving instanceof EntityPlayer && printDeathCoords)
         {
-            ChatComponentText posText = new ChatComponentText("X: " + MathHelper.floor_double(event.entityLiving.posX) + " Y: " + MathHelper.floor_double(event.entityLiving.posY + 0.5d) + " Z: " + MathHelper.floor_double(event.entityLiving.posZ));
+            TextComponentString posText = new TextComponentString("X: " + MathHelper.floor_double(event.entityLiving.posX) + " Y: " + MathHelper.floor_double(event.entityLiving.posY + 0.5d) + " Z: " + MathHelper.floor_double(event.entityLiving.posZ));
             try
             {
                 if (!MinecraftServer.getServer().getCommandManager().getPossibleCommands((ICommandSender) event.entityLiving, "tp").isEmpty())
                 {
-                    posText.setChatStyle(new ChatStyle().setItalic(true)
-                            .setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("Click to teleport!")))
+                    posText.setChatStyle(new Style().setItalic(true)
+                            .setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to teleport!")))
                             .setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + event.entityLiving.posX + " " + (event.entityLiving.posY + 0.5d) + " " + event.entityLiving.posZ)));
                 }
             }
@@ -117,7 +120,7 @@ public class ForgeEventHandler
 
             }
 
-            ((EntityPlayer) event.entityLiving).addChatComponentMessage(new ChatComponentText("You died at ").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA)).appendSibling(posText));
+            ((EntityPlayer) event.entityLiving).addChatComponentMessage(new TextComponentString("You died at ").setChatStyle(new Style().setColor(TextFormatting.AQUA)).appendSibling(posText));
         }
     }
 
@@ -135,7 +138,7 @@ public class ForgeEventHandler
     {
         if (CoreConstants.isAprilFools())
         {
-            ChatStyle style = event.component.getChatStyle();
+            Style style = event.component.getChatStyle();
             float chance = 0.25f;
             if (CoreConstants.RANDOM.nextFloat() < chance)
             {
@@ -161,7 +164,7 @@ public class ForgeEventHandler
             {
                 style.setObfuscated(true);
             }
-            style.setColor(EnumChatFormatting.values()[CoreConstants.RANDOM.nextInt(EnumChatFormatting.values().length)]);
+            style.setColor(TextFormatting.values()[CoreConstants.RANDOM.nextInt(TextFormatting.values().length)]);
             event.component.setChatStyle(style);
         }
     }

@@ -33,20 +33,20 @@
 package net.doubledoordev.d3core.util;
 
 import com.google.gson.JsonParseException;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
 import net.doubledoordev.d3core.D3Core;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldInfo;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -117,11 +117,11 @@ public class FMLEventHandler
                 String txt = FileUtils.readFileToString(file);
                 try
                 {
-                    event.player.addChatMessage(IChatComponent.Serializer.func_150699_a(txt));
+                    event.player.addChatMessage(ITextComponent.Serializer.func_150699_a(txt));
                 }
                 catch (JsonParseException jsonparseexception)
                 {
-                    event.player.addChatMessage(new ChatComponentText(txt));
+                    event.player.addChatMessage(new TextComponentString(txt));
                 }
             }
             catch (IOException e)

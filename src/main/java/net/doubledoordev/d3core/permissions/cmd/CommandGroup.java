@@ -37,7 +37,7 @@ import net.doubledoordev.d3core.permissions.PermConstants;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import static net.doubledoordev.d3core.permissions.PermConstants.PERMISSIONS_PREFIX;
 
@@ -65,12 +65,12 @@ public class CommandGroup extends CommandPermissionBase
         switch (args[0].toLowerCase())
         {
             case "help":
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.new"));
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.remove"));
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.node.add"));
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.node.remove"));
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.parent.set"));
-                sender.addChatMessage(new ChatComponentTranslation("commands.d3group.help.parent.clear"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.new"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.remove"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.node.add"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.node.remove"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.parent.set"));
+                sender.addChatMessage(new TextComponentTranslation("commands.d3group.help.parent.clear"));
                 break;
             default:
                 throw new WrongUsageException(getCommandUsage(sender));

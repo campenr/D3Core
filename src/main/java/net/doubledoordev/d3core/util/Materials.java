@@ -32,10 +32,10 @@
 
 package net.doubledoordev.d3core.util;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.doubledoordev.d3core.D3Core;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
